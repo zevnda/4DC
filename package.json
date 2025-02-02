@@ -5,8 +5,6 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "lint": "eslint .",
-        "lint:fix": "eslint . --fix",
         "start": "node index.js",
         "dev": "nodemon index.js",
         "monit": "pm2 start index.js --watch --name 4dc && pm2 monit"
@@ -18,7 +16,6 @@
         "@discordjs/rest": "^0.1.0-canary.0",
         "@discordjs/voice": "^0.8.0",
         "axios": "^1.5.0",
-        "canvas": "^2.8.0",
         "console-stamp": "^3.0.4",
         "cron": "^1.8.2",
         "discord-api-types": "^0.25.2",
@@ -30,12 +27,6 @@
         "mongoose": "^6.3.4",
         "nodemon": "^2.0.19",
         "pm2": "^5.1.2",
-        "rss-parser": "^3.12.0",
         "uuid": "^8.3.2"
-    },
-    "devDependencies": {
-        "@eslint/js": "^9.3.0",
-        "eslint": "^9.3.0",
-        "globals": "^15.3.0"
     }
 }

@@ -1,6 +1,5 @@
 import { promisify } from 'util';
 import glob from 'glob';
-
 const PG = promisify(glob);
 
 export default async (client) => {

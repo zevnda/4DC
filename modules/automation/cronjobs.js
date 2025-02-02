@@ -1,6 +1,5 @@
 import { dbUpdateOne, dbDeleteOne, dbFind } from '../../utils/utils.js';
 import rankSchema from '../../schemas/rank_schema.js';
-import warnSchema from '../../schemas/warn_schema.js';
 import inviteSchema from '../../schemas/invite_schema.js';
 import timerSchema from '../../schemas/timer_schema.js';
 import { CronJob } from 'cron';
@@ -28,16 +27,6 @@ export default async (client) => {
         // Assign the new rank position to each user
         for (let i = 0; i < newPositionArr.length; i++) {
             await dbUpdateOne(rankSchema, { userId: newPositionArr[i].userId }, { rank: newPositionArr[i].pos });
-        }
-    });
-
-    // Fetch all warnings and remove non-existent users - runs once per month, on the first day of the month (Monday 00:00)
-    const warnsCheck = new CronJob('0 0 1 * *', async () => {
-        const results = await warnSchema.find();
-        for (const data of results) {
-            const { userId } = data;
-            const exists = await guild.members.fetch(userId).catch(() => console.log('Found and removed a user in the warning system that no longer exists'));
-            if (!exists) await dbDeleteOne(warnSchema, { userId: userId });
         }
     });
 
@@ -96,34 +85,6 @@ export default async (client) => {
         await dbUpdateOne(timerSchema, { timer: 'dms' }, { timestamp: expireTimestamp });
     });
 
-    // Delete abandoned service threads
-    const deleteAbandonedServiceThreads = new CronJob('0 1 * * 2', async () => {
-        const threadChan = await guild.channels.fetch('1096198410664689744');
-        const threads = threadChan.threads.cache;
-        threads.forEach(async thread => {
-            const exists = await guild.members.fetch(thread.ownerId).catch(() => { console.log('Found and removed an abandoned service thread'); });
-            if (!exists) thread.delete().catch(err => console.error('There was a problem deleting an abandoned service thread: ', err));
-        });
-    });
-
-    // Archive abandoned LFS thresds
-    const deleteAbandonedLFSThreads = new CronJob('0 1 * * 2', async () => {
-        const threadChan = await guild.channels.fetch('978694637088804884');
-        const threads = threadChan.threads.cache;
-        threads.forEach(async thread => {
-            const exists = await guild.members.fetch(thread.ownerId).catch(err => console.error('There was a problem fetching a guild member: ', err));
-            if (!exists) {
-                try {
-                    await thread.setLocked(true);
-                    await thread.setArchived(true);
-                    console.log('Found and removed an abandoned LFS thread');
-                } catch (err) {
-                    console.error('There was a problem archiving an abandoned lfs thread: ', err);
-                }
-            }
-        });
-    });
-
     // Check reminders and send ping if needed
     const checkReminders = new CronJob('0 * * * *', async () => {
         const reminders = await dbFind(remindersSchema);
@@ -139,11 +100,8 @@ export default async (client) => {
     });
 
     rankSort.start();
-    warnsCheck.start();
     premiumAdsCheck.start();
     invitesCheck.start();
     pauseDMs.start();
-    deleteAbandonedServiceThreads.start();
-    deleteAbandonedLFSThreads.start();
     checkReminders.start();
 };
