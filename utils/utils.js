@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { CommandInteraction } from 'discord.js';
+import { CommandInteraction, MessageFlags } from 'discord.js';
 const attachmentMap = new Map();
 
 /**
@@ -17,7 +17,7 @@ async function sendResponse(interaction, content = '', embeds = [], files = [], 
             embeds: embeds,
             files: files,
             components: components,
-            ephemeral: ephemeral,
+            flags: ephemeral === true && MessageFlags.Ephemeral,
         });
     } catch (err) {
         console.error('There was a problem editing an interaction: ', err);
@@ -39,7 +39,7 @@ async function sendReply(interaction, content = '', embeds = [], files = [], com
             embeds: embeds,
             files: files,
             components: components,
-            ephemeral: ephemeral,
+            flags: ephemeral === true && MessageFlags.Ephemeral,
         });
     } catch (err) {
         console.error('There was a problem replying to an interaction: ', err);
@@ -62,7 +62,7 @@ async function sendReplyWithMention(interaction, content = '', embeds = [], file
             embeds: embeds,
             files: files,
             components: components,
-            ephemeral: ephemeral,
+            flags: ephemeral === true && MessageFlags.Ephemeral,
             allowedMentions: { parse: ['users'] },
         });
     } catch (err) {
@@ -85,7 +85,7 @@ async function sendFollowUp(interaction, content = '', embeds = [], files = [], 
             embeds: embeds,
             files: files,
             components: components,
-            ephemeral: ephemeral,
+            flags: ephemeral === true && MessageFlags.Ephemeral,
         });
     } catch (err) {
         console.error('There was a problem replying to an interaction: ', err);

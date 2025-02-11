@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { CommandInteraction, PermissionFlagsBits } from 'discord.js';
+import { CommandInteraction, MessageFlags, PermissionFlagsBits } from 'discord.js';
 import adInformationButton from '../../handlers/buttons/ad_information.js';
 
 const cooldowns = new Map();
@@ -37,7 +37,7 @@ export default {
                         // Notify the user
                         return interaction.reply({
                             content: `Cooldown: ${cooldownMessage}`,
-                            ephemeral: true,
+                            flags: MessageFlags.Ephemeral,
                         });
                     }
                 }
@@ -50,7 +50,7 @@ export default {
             if (!command) {
                 interaction.reply({
                     content: 'Could not run this command',
-                    ephemeral: true,
+                    flags: MessageFlags.Ephemeral,
                 }).catch(err => console.error('There was a problem sending an interaction: ', err));
                 return client.command.module(interaction.commandName);
             }
@@ -81,7 +81,7 @@ export default {
                         // Notify the user
                         return interaction.reply({
                             content: `Cooldown: ${cooldownMessage}`,
-                            ephemeral: true,
+                            flags: MessageFlags.Ephemeral,
                         });
                     }
                 }

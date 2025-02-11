@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
+import { CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } from 'discord.js';
 import index from '../../../lists/index.js';
 
 export default {
@@ -27,7 +27,7 @@ export default {
         const { client, guild, options } = interaction;
         let channel = interaction.channel;
 
-        await interaction.deferReply({ ephemeral: true }).catch(err => console.error('There was a problem deferring an interaction: ', err));
+        await interaction.deferReply({ flags: MessageFlags.Ephemeral }).catch(err => console.error('There was a problem deferring an interaction: ', err));
 
         const avatarURL = client.user.avatarURL({ format: 'png', size: 256 });
 

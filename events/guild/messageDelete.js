@@ -13,10 +13,10 @@ function get64bin(int) {
 export default {
     name: 'messageDelete',
     async execute(message, client) {
-        if (message?.author.bot || message?.channel.id === process.env.TEST_CHAN) return;
+        if (message?.author.bot) return;
 
         const guild = client.guilds.cache.get(process.env.GUILD_ID);
-        const logChan = guild.channels.cache.get(process.env.MSGLOG_CHAN);
+        const logChan = guild.channels.cache.get(process.env.TEST_CHAN);
 
         setTimeout(async () => {
             // Fetch auditlogs for MessageDelete events

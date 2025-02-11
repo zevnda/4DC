@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType } from 'discord.js';
+import { CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType, MessageFlags } from 'discord.js';
 import { dbCreate, sendResponse } from '../../../utils/utils.js';
 import remindersSchema from '../../../schemas/reminders.js';
 import moment from 'moment';
@@ -35,7 +35,7 @@ export default {
     async execute(interaction) {
         const { user } = interaction;
 
-        await interaction.deferReply({ ephemeral: true }).catch(err => console.error('There was a problem deferring an interaction: ', err));
+        await interaction.deferReply({ flags: MessageFlags.Ephemeral }).catch(err => console.error('There was a problem deferring an interaction: ', err));
 
         const timeString = interaction.options.getString('time');
         const dateString = interaction.options.getString('date');

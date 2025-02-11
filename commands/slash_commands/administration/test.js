@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { CommandInteraction, ApplicationCommandType, EmbedBuilder, ApplicationCommandOptionType, ButtonBuilder, ActionRowBuilder, SelectMenuBuilder, ButtonStyle, TextInputBuilder, ModalBuilder, AttachmentBuilder, ApplicationCommandPermissionsManager, bold, ChannelSelectMenuBuilder, ChannelType, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, PermissionFlagsBits } from 'discord.js';
+import { CommandInteraction, ApplicationCommandType, MessageFlags, EmbedBuilder, ApplicationCommandOptionType, ButtonBuilder, ActionRowBuilder, SelectMenuBuilder, ButtonStyle, TextInputBuilder, ModalBuilder, AttachmentBuilder, ApplicationCommandPermissionsManager, bold, ChannelSelectMenuBuilder, ChannelType, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, PermissionFlagsBits } from 'discord.js';
 import { sendReply, sendResponse, dbFindOne, dbUpdateOne } from '../../../utils/utils.js';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
@@ -18,7 +18,7 @@ export default {
     async execute(interaction, client) {
         const { options, member, guild, channel, user } = interaction;
 
-        await interaction.deferReply({ ephemeral: true }).catch(err => console.error('There was a problem deferring an interaction: ', err));
+        await interaction.deferReply({ flags: MessageFlags.Ephemeral }).catch(err => console.error('There was a problem deferring an interaction: ', err));
         interaction.deleteReply();
     },
 };

@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType } from 'discord.js';
+import { CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType, MessageFlags } from 'discord.js';
 import { sendResponse } from '../../../utils/utils.js';
 
 export default {
@@ -37,7 +37,7 @@ export default {
         const message = options.getString('message');
         const attachment = options.getAttachment('image');
 
-        await interaction.deferReply({ ephemeral: true }).catch(err => console.error('There was a problem deferring an interaction: ', err));
+        await interaction.deferReply({ flags: MessageFlags.Ephemeral }).catch(err => console.error('There was a problem deferring an interaction: ', err));
 
         target.send({
             content: message ? message : '',
