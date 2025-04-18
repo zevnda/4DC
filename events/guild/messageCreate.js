@@ -13,7 +13,7 @@ export default {
      */
     async execute(message, client) {
         // Ignore DM messages
-        if (message?.channel.type === 1) return;
+        if (message?.channel.type === 1 || message?.guildId === '1313512298949644379') return;
 
         // Blacklist checks
         linkCooldown(message, client);
