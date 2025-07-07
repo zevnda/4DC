@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { pathToFileURL } from 'node:url'
 import dotenv from 'dotenv'
 import type { Command, CommandData } from '@/types/commands'
 import { Client, Collection, GatewayIntentBits, Partials } from 'discord.js'
@@ -35,7 +36,7 @@ async function loadCommands() {
 
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file)
-    const command = await import(filePath)
+    const command = await import(pathToFileURL(filePath).href)
     if ('data' in command && 'execute' in command) {
       client.commands.set(command.data.name, command)
       commandsArr.push(command.data.toJSON())
@@ -51,7 +52,7 @@ async function loadEvents() {
 
   for (const file of eventFiles) {
     const filePath = path.join(eventsPath, file)
-    const event = await import(filePath)
+    const event = await import(pathToFileURL(filePath).href)
     if (event.once) {
       client.once(event.name, (...args) => event.execute(...args, commandsArr))
     } else {
