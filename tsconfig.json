@@ -16,10 +16,7 @@
     "outDir": "./.build",
     "rootDir": "./",
     "removeComments": true,
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "baseUrl": "./"
   },
   "include": ["./**/*"],
   "exclude": ["node_modules", ".build"]

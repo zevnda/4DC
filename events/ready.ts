@@ -1,5 +1,5 @@
-import type { CommandData } from '@/types/commands'
 import type { Client } from 'discord.js'
+import type { CommandData } from '../types/commands'
 import { Events } from 'discord.js'
 
 export const name = Events.ClientReady

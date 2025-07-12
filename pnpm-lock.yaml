@@ -14,9 +14,6 @@ importers:
       dotenv:
         specifier: ^17.0.1
         version: 17.0.1
-      module-alias:
-        specifier: ^2.2.3
-        version: 2.2.3
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.4.2
@@ -892,9 +889,6 @@ packages:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
     engines: {node: '>=10'}
     hasBin: true
-
-  module-alias@2.2.3:
-    resolution: {integrity: sha512-23g5BFj4zdQL/b6tor7Ji+QY4pEfNH784BMslY9Qb0UnJWRAt+lQGLYmRaM0KDBwIG23ffEBELhZDP2rhi9f/Q==}
 
   module-details-from-path@1.0.4:
     resolution: {integrity: sha512-EGWKgxALGMgzvxYF1UyGTy0HXX/2vHLkw6+NvDKW2jypWbHpjQuj4UMcqQWXHERJhVGKikolT06G3bcKe4fi7w==}
@@ -2177,8 +2171,6 @@ snapshots:
       brace-expansion: 2.0.2
 
   mkdirp@1.0.4: {}
-
-  module-alias@2.2.3: {}
 
   module-details-from-path@1.0.4: {}
 

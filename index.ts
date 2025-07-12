@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import dotenv from 'dotenv'
-import type { Command, CommandData } from '@/types/commands'
+import type { Command, CommandData } from './types/commands'
 import { Client, Collection, GatewayIntentBits, Partials } from 'discord.js'
 
 dotenv.config()
