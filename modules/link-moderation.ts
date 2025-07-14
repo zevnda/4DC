@@ -69,6 +69,20 @@ function findLinkPlatform(content: string) {
   return null
 }
 
+function containsAnyPlatformLink(content: string) {
+  for (const config of PLATFORM_CONFIG) {
+    for (const pattern of config.patterns) {
+      if (pattern.test(content)) {
+        return true
+      }
+    }
+  }
+  return false
+}
+
+const DISCORD_INVITE_REGEX =
+  /https?:\/\/(www\.)?(discord\.gg|discord(app)?\.com\/invite|discord\.com\/invite)\/[A-Za-z0-9-]+/i
+
 export async function handleLinkModeration(message: Message) {
   if (message.author.bot) return
   if (!message.guild) return
@@ -76,6 +90,43 @@ export async function handleLinkModeration(message: Message) {
 
   const channelId = message.channel.id
   const content = message.content
+
+  const BOOSTER_CHANNEL_ID = process.env.BOOSTER_CHANNEL_ID
+  const OTHER_CHANNEL_ID = process.env.OTHER_CHANNEL_ID
+
+  if (DISCORD_INVITE_REGEX.test(content) && channelId !== OTHER_CHANNEL_ID) {
+    try {
+      await message.delete()
+      if (message.channel.isSendable()) {
+        const warnMsg = await message.channel.send({
+          content: `<@${message.author.id}> Please post **Discord Invite** links only in <#${process.env.OTHER_CHANNEL_ID}>.`,
+          allowedMentions: { users: [message.author.id] },
+        })
+        setTimeout(() => warnMsg.delete().catch(() => {}), 5000)
+      }
+    } catch (err) {
+      console.error('Error deleting message or sending warning:', err)
+    }
+    return
+  }
+
+  if (channelId === BOOSTER_CHANNEL_ID) {
+    if (!containsAnyPlatformLink(content)) {
+      try {
+        await message.delete()
+        if (message.channel.isSendable()) {
+          const warnMsg = await message.channel.send({
+            content: `<@${message.author.id}> Only content creation specific links are allowed in this channel.`,
+            allowedMentions: { users: [message.author.id] },
+          })
+          setTimeout(() => warnMsg.delete().catch(() => {}), 5000)
+        }
+      } catch (err) {
+        console.error('Error deleting message or sending warning:', err)
+      }
+    }
+    return
+  }
 
   const linkPlatform = findLinkPlatform(content)
   if (!linkPlatform) return
