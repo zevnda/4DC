@@ -14,6 +14,7 @@
     "prettier": "prettier --write ."
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.86.0",
     "discord.js": "^14.21.0",
     "dotenv": "^17.0.1"
   },
