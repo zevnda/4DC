@@ -35,8 +35,10 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     }
 
     if (data) {
+      const { count } = await supabase.from('giveaway').select('*', { count: 'exact', head: true })
+
       await interaction.editReply(
-        `🎉 ${userMention(interaction.user.id)} has been entered into the giveaway! \n\nThere are now ${bold(`${data.length} entries`)}. \nJoin the giveaway with the </enter-giveaway:1446720629041790986> command. \n\nGood luck! 🍀`,
+        `🎉 ${userMention(interaction.user.id)} has been entered into the giveaway! \n\nThere are now ${bold(`${count ?? 1} entries`)}. \nJoin the giveaway with the </enter-giveaway:1446720629041790986> command. \n\nGood luck! 🍀`,
       )
       return
     }
